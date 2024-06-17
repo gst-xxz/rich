@@ -1,0 +1,32 @@
+{
+  "name": "etf_quant",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "cd packages/web && npm run dev",
+    "dev:task": "cd packages/data && npm run dev",
+    "build:klinecharts": "cd packages/klinecharts && npm run build",
+    "build:klinecharts-pro": "cd packages/klinecharts-pro && npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@etf/api": "workspace:^",
+    "@etf/data": "workspace:^",
+    "@etf/klinecharts": "workspace:^",
+    "@etf/klinecharts-pro": "workspace:^",
+    "ahooks": "^3.8.0",
+    "antd": "^5.17.4",
+    "classnames": "^2.5.1",
+    "dayjs": "^1.11.11",
+    "react-router-dom": "^6.23.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3"
+  }
+}
