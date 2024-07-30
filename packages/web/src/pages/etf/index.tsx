@@ -7,4 +7,5 @@ const ETF = () => {
     </div>
   );
 };
+
 export default ETF;

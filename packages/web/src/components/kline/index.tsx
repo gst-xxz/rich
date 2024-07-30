@@ -13,6 +13,12 @@ const EtfChart = () => {
     if (chartRef.current) {
       return;
     }
+    const getTheme = () => {
+      const newTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+      return newTheme;
+    };
     // 创建实例
     chartRef.current = new KLineChartPro({
       container: containerRef.current!,
@@ -27,14 +33,22 @@ const EtfChart = () => {
       datafeed: new DefaultDatafeed(),
       drawingBarVisible: false,
       watermark: "",
+      theme: getTheme(),
       styles: {
         candle: { priceMark: { last: { show: false } } },
       },
       mainIndicators: ["BOLL"],
       subIndicators: ["VOL"],
     });
+    const handleThemeChange = () => {
+      const newTheme = getTheme();
+      chartRef.current?.setTheme(newTheme);
+    };
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    media.addEventListener("change", handleThemeChange);
   }, []);
-  return <div ref={containerRef} className="w-[600px] h-96"></div>;
+
+  return <div ref={containerRef} className="w-full h-96"></div>;
 };
 
 export default EtfChart;

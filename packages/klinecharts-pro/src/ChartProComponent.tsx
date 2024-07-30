@@ -669,7 +669,7 @@ const ChartProComponent: Component<ChartProComponentProps> = (props) => {
           }}
         />
       </Show>
-      <PeriodBar
+      {/* <PeriodBar
         locale={props.locale}
         symbol={symbol()}
         spread={drawingBarVisible()}
@@ -706,7 +706,7 @@ const ChartProComponent: Component<ChartProComponentProps> = (props) => {
             setScreenshotUrl(url);
           }
         }}
-      />
+      /> */}
       <div class="klinecharts-pro-content">
         <Show when={loadingVisible()}>
           <Loading />

@@ -27,7 +27,7 @@ const wait = (time, step = 200) => {
   });
 };
 
-const getEtfInfo = async (code, name, market, index) => {
+const getEtfInfo = async (code, name, market, index, isFirst = true) => {
   try {
     await wait(index);
     console.log("start:" + code);
@@ -42,8 +42,11 @@ const getEtfInfo = async (code, name, market, index) => {
 
     return [code, name, bd, parseFloat(gm), market];
   } catch (e) {
-    console.log(1);
-    return null;
+    if (isFirst) {
+      return await getEtfInfo(code, name, market, index, false);
+    }
+
+    return [code, name, "", 0, ""];
   }
 };
 
@@ -56,6 +59,7 @@ const getEtfList = async () => {
       getEtfInfo(code, name, marker, index)
   );
   const list = await Promise.all(ps);
+
   fs.writeFile(__dirname + "/etf.json", JSON.stringify(list), () => {
     console.log("写入文件成功");
   });
