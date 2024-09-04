@@ -15,12 +15,10 @@ export const getEtfIndexList = async () => {
       ...obj,
     };
   }, {} as Record<string, { index: string; etfs: EtfBasicInfo[] }>);
-  return Object.values(indexMap)
-    .map((item) => ({
-      ...item,
-      etfs: item.etfs.sort((a, b) => (a.gm > b.gm ? -1 : 1)).slice(0, 1),
-    }))
-    .filter((item) => item.etfs[0].gm > 2);
+  return Object.values(indexMap).map((item) => ({
+    ...item,
+    etfs: item.etfs.sort((a, b) => (a.gm > b.gm ? -1 : 1)),
+  }));
 };
 
 export enum PeriodType {
