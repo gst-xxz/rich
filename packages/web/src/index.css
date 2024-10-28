@@ -27,3 +27,7 @@ body {
     background-color: #ffffff;
   }
 }
+
+.same-font {
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+}

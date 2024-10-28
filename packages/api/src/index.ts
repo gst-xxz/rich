@@ -1,7 +1,6 @@
 import list, { EtfBasicInfo, etfCodeIdMap } from "@etf/data";
 import { commonFetch } from "./utils";
-import { KLineData } from "@etf/klinecharts";
-import dayjs from "dayjs";
+import { KLine } from "@etf/types";
 
 export const getEtfList = async () => list;
 
@@ -18,9 +17,11 @@ export const getEtfIndexList = async () => {
   return Object.values(indexMap)
     .map((item) => ({
       ...item,
-      etfs: item.etfs.sort((a, b) => (a.gm > b.gm ? -1 : 1)).slice(0, 1),
+      etfs: item.etfs
+        .sort((a, b) => (a.gm > b.gm ? -1 : 1))
+        .filter((etf) => etf.gm > 1),
     }))
-    .filter((item) => item.etfs[0].gm > 2);
+    .filter((item) => item.etfs.length > 0);
 };
 
 export enum PeriodType {
@@ -39,11 +40,11 @@ interface OrginEtfResult {
   };
 }
 export const getEtfKline = async (
-  symbol = "159707",
+  symbol = "510300",
   period: PeriodType = PeriodType.daily,
   start_date = "19700101",
   end_date = "20500101",
-  adjust: Adjust = Adjust.default
+  adjust: Adjust = Adjust.qfq
 ) => {
   // https://quote.eastmoney.com/sz159707.html
 
@@ -61,19 +62,32 @@ export const getEtfKline = async (
   };
 
   const data = (await commonFetch(url, params)) as OrginEtfResult;
-  const kLineData: KLineData[] =
+  const kLineData: KLine[] =
     data.data?.klines.map((item) => {
-      const [timestamp, open, close, high, low, volume, turnover] =
-        item.split(",");
+      const [
+        date,
+        open,
+        close,
+        high,
+        low,
+        volume,
+        turnover,
+        amplitude,
+        change,
+        change_amount,
+      ] = item.split(",");
 
       return {
-        timestamp: dayjs(timestamp).valueOf(),
+        date,
         open: +open,
         close: +close,
         high: +high,
         low: +low,
         volume: +volume,
         turnover: +turnover,
+        amplitude: +amplitude,
+        change: +change,
+        change_amount: +change_amount,
       };
     }) ?? [];
   return kLineData;

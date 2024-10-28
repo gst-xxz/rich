@@ -1,18 +1,3 @@
-export function executeCallback<T = any>(code: string): Promise<T> {
-  return new Promise((resolve) => {
-    // 定义 callback 函数
-    function callback(data: T) {
-      resolve(data as T); // 这里可以根据需要处理 data 参数
-    }
-
-    // 使用 new Function 创建一个新的函数对象
-    const func = new Function("callback", code);
-
-    // 调用新创建的函数，并传入 callback 函数
-    func(callback);
-  });
-}
-
 export const commonFetch = async (
   url: string,
   paramOrData?: Record<string, unknown>,
